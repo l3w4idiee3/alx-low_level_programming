@@ -1,34 +1,30 @@
 #include <stdio.h>
 
 /**
- * main - Prints 3 combination of numbers
+ * main - print all double digit numbers separated by a comma
  *
- * Return: Always (Success)
+ * Return: 0 always
  */
 int main(void)
 {
-	int c, i, k;
+	int a = '0';
+	int b = '0';
 
-	for (c = '0'; c <= '9'; c++)
+	while (a <= '9')
 	{
-		for (i = '0'; i <= '9'; i++)
+		while (b <= '9')
 		{
-			for (k = '0'; k <= '9'; k++)
+			putchar(a);
+			putchar(b);
+			if (b != '9' || a != '9')
 			{
-				if (c < i && i < k)
-				{
-					putchar(c);
-					putchar(i);
-					putchar(k);
-
-					if (c != '7')
-					{
-						putchar(',');
-						putchar(' ');
-					}
-				}
+				putchar(',');
+				putchar(' ');
 			}
+			b++;
 		}
+		b = '0';
+		a++;
 	}
 	putchar('\n');
 	return (0);
