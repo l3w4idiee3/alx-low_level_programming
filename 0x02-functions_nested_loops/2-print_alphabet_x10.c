@@ -2,6 +2,8 @@
 
 /**
  * print_alphabet_x10 - Prints 10 times the alphabet, in lowercase.
+ *
+ * Return: always o
  */
 void print_alphabet_x10(void)
 {
