@@ -1,19 +1,21 @@
 #include "main.h"
-#include <string.h>
 
 /**
- * reverse_array - reverse array `a' of length `n'
- * @a: array to reverse
- * @n: length of array
+ * string_toupper - Change all lowercase letters to uppercase
+ * @c: string
+ * Return: c
  */
-void reverse_array(int *a, int n)
-{
-	int i, tmp;
 
-	for (i = 0; i < --n; ++i)
+char *string_toupper(char *c)
+{
+	int i;
+
+	for (i = 0; c[i] != '\0'; i++)
 	{
-		tmp = a[i];
-		a[i] = a[n];
-		a[n] = tmp;
+		if (c[i] > 96 && c[i] < 123)
+		{
+			c[i] -= 32;
+		}
 	}
+	return (c);
 }
