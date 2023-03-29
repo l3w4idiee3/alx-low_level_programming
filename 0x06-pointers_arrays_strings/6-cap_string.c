@@ -6,20 +6,15 @@
  *
  * Return: pointer to `s'
  */
-char *cap_string(char *str) 
+char *string_toupper(char *s)
 {
-	char *p = str;
-	int cap_next = 1; // start by capitalizing the first letter
-	while (*p != '\0') 
+	int i = 0;
+
+	while (s[i])
 	{
-	if (cap_next && islower(*p)) 
-	{
-		*p = toupper(*p);
+		if (s[i] >= 'a' && s[i] <= 'z')
+			s[i] -= 'a' - 'A';
+		++i;
 	}
-	cap_next = isspace(*p) || *p == ',' || *p == ';' || *p == '.' ||
-		*p == '!' || *p == '?' || *p == '"' || *p == '(' ||
-		*p == ')' || *p == '{' || *p == '}';
-	p++;
-	}
-	return str;
+	return (s);
 }
