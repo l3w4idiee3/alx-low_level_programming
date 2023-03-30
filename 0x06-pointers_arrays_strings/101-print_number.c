@@ -7,17 +7,17 @@
  */
 void print_number(int n)
 {
-	int digit, magnitude = 1;
+	int sign = (n < 0 ? -1 : 1);
 
-	while (n / magnitude >= 10)
+	if (!(n / 10))
 	{
-		magnitude *= 10;
+		if (sign < 0)
+			putchar('-');
+		putchar(n * sign + '0');
 	}
-	while (magnitude > 0)
+	else
 	{
-		digit = n / magnitude;
-		putchar(digit +'\0');
-		n %= magnitude;
-		magnitude /= 10;
+		print_number(n / 10);
+		putchar(n % 10 * sign + '0');
 	}
 }
