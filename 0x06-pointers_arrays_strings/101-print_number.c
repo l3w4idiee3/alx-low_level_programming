@@ -1,4 +1,5 @@
 #include "main.h"
+#include <stdio.h>
 
 /**
  * print_number - print an integer as a string char by char
@@ -6,17 +7,17 @@
  */
 void print_number(int n)
 {
-	int sign = (n < 0 ? -1 : 1);
+	int digit, magnitude = 1;
 
-	if (!(n / 10))
+	while (n / magnitude >= 10)
 	{
-		if (sign < 0)
-			_putchar('-');
-		_putchar(n * sign + '0');
+		magnitude *= 10;
 	}
-	else
+	while (magnitude > 0)
 	{
-		print_number(n / 10);
-		_putchar(n % 10 * sign + '0');
+		digit = n / magnitude;
+		putchar(digit +'\0');
+		n %= magnitude;
+		magnitude /= 10;
 	}
 }
