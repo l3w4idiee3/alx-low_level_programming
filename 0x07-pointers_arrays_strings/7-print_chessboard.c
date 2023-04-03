@@ -1,10 +1,12 @@
 #include "main.h"
-#include <string.h>
+
+#include "main.h"
 
 /**
- * print_chessboard - print chessboard from array of pieces and locations
- * @a: 2D array of pieces and locations
+ * print_chessboard - print the chessboard, 2d array
+ * @a: 2d array of chars
  */
+
 void print_chessboard(char (*a)[8])
 {
 	int y, x;
