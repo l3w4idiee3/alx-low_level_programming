@@ -1,5 +1,5 @@
 #include "main.h"
-#include <string.h>
+#include <stdio.h>
 
 /**
  * print_diagsums - print sum of left and right diagonals of matrix `a'
