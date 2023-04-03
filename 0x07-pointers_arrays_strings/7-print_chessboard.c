@@ -1,4 +1,5 @@
 #include "main.h"
+#include <string.h>
 
 /**
  * print_chessboard - print chessboard from array of pieces and locations
