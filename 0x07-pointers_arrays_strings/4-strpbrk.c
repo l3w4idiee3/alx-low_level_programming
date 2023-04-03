@@ -1,5 +1,4 @@
 #include "main.h"
-#include <string.h>
 
 /**
  * _strpbrk - locate first occurence of characters from `accept' in `s'
