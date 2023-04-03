@@ -2,20 +2,21 @@
 #include <string.h>
 
 /**
- * memset - fill char *s, char b, unsigned int n with constant byte
+ *  _memset - fill char *s, char b, unsigned int n with constant byte
  * @s: memory to be appointed
  * @b: memory to be appointed
- * n: size of the byte
+ * @n: integer value
  *
  * Return: s
  */
 char *_memset(char *s, char b, unsigned int n)
 {
-	char *ptr = s;
+	unsigned int k;
 
-	while (n--)
-	{
-		*ptr = b;
-	}
-	return (0);
+	k = 0;
+
+	for (k = 0; k < n; k++)
+		s[k] = b;
+
+	return (s);
 }
