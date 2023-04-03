@@ -12,9 +12,12 @@ char *_strchr(char *s, char c)
 {
 	while (*s != '\0')
 	{
-	if (*s == c)
-	return (s);
-	++s;
-	}	       
-	return (NULL);
+		if (*s == c)
+		return (s)
+		if else (*(s + 1) == c)
+			return (s +1);
+		++s;
+	}
+
+	return (s + 1);
 }
