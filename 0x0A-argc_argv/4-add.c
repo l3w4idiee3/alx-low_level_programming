@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
 	int sum = 0;
 	int i = 1;
 	int j = 0;
+	char *str = argv[j];
 
 	if (argc == 1)
 	{
@@ -27,7 +28,7 @@ int main(int argc, char *argv[])
 
 		for (j = 0; num_str[j] != '\0'; j++)
 		{
-		if (!isdigit(num_str[j]))
+		if (!isdigit(str[j]))
 		{
 		printf("Error\n");
 		return (1);
