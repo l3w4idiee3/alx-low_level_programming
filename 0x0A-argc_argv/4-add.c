@@ -9,39 +9,27 @@
  *
  * Return: 0 for success, 1 if error
  */
-
-int main(int argc, char *argv[])
-	{
-	int sum = 0;
-	int i = 1;
-	int j = 0;
-	char *str = argv[j];
+int main(int argc, char **argv)
+{
+	int i, c, sum = 0;
 
 	if (argc == 1)
 	{
-	printf("%d\n", sum);
-	return (0);
+		puts("0");
+		return (0);
 	}
-	for (i = 1; i < argc; i++)
+	while (--argc)
 	{
-		char *num_str = argv[i];
-
-		for (j = 0; num_str[j] != '\0'; j++)
+		++argv;
+		for (i = 0; (c = *(*argv + i)); ++i)
 		{
-		if (!isdigit(str[j]))
-		{
-		printf("Error\n");
-		return (1);
-	}
-	}
-	sum = atoi(num_str);
-
-	if (sum < 0)
-	{
-		printf("Error\n");
-		return (1);
-	}
-	sum += sum;
+			if (!(isdigit(c)))
+			{
+				puts("Error");
+				return (1);
+			}
+		}
+		sum += atoi(*argv);
 	}
 	printf("%d\n", sum);
 	return (0);
