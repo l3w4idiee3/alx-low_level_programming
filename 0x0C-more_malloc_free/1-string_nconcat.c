@@ -1,6 +1,5 @@
 #include "main.h"
-#include <string.h>
-#include <stlib.h>
+#include <stdlib.h>
 /**
  * string_nconcat - concatenate `s1' and the first `n' bytes of `s2'
  * @s1: first string
