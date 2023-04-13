@@ -1,4 +1,6 @@
 #include <stdlib.h>
+#include "main.h"
+#include <stdio.h>
 
 /**
  * _calloc - allocate (`size' * `nmemb') bytes and set to 0
