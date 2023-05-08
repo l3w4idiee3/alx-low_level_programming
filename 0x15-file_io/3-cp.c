@@ -1,16 +1,18 @@
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/uio.h>
+#define _POSIX_C_SOURCE 200809L
 #include <unistd.h>
-#include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#define READ_NBYTES 1204
+
 /**
- * main - entry point for program to copy files
- * @argc: count of arguments passed
- * @argv: array of char pointers to the arguments
+ * main - copy content of one file into another
+ * @argc: count of arguments to program
+ * @argv: array of arguments to program
  *
- * Return: 1 on success, exits on failure w/ error code
+ * Return: EXIT_SUCCESS on success, exit with error number, otherwise.
  */
 int main(int argc, char *argv[])
 {
