@@ -1,9 +1,14 @@
 #include "main.h"
+#include <stdlib.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/uio.h>
+#include <fcntl.h>
 /**
  * read_textfile - reading a file and printing to POSX stdout
  * @filename: pointer to the name of the file
- * @size_t letters: text to be read
+ * @letters: text to be read
  * Return: letter
  */
 ssize_t read_textfile(const char *filename, size_t letters)
