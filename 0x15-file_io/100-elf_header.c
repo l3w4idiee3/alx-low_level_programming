@@ -1,4 +1,10 @@
 #include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
 /**
  * main - entry point for program to get header of ELF file
  * @argc: count of arguments present in CLI
