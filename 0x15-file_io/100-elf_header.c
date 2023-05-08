@@ -12,6 +12,12 @@
  *
  * Return: 1 on success, error code on failure
  */
+int main(int argc, char *argv[])
+{
+	printf("argc:%d, argv:%p\n", argc, (void *)*argv);
+	return (1);
+}
+
 void get_magic(Elf64_Ehdr *ehdr, char *fname, int fd)
 {
 	size_t i = 0;
