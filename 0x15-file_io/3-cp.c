@@ -1,60 +1,111 @@
-#include "main.h"
-#define _POSIX_C_SOURCE 200809L
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/uio.h>
+#include <unistd.h>
 #include <fcntl.h>
-#define READ_NBYTES 1204
-
+#include <stdio.h>
+#include <stdlib.h>
+int safe_close(int);
+void write_error(char *);
+void read_error(char *);
 /**
- * main - copy content of one file into another
- * @argc: count of arguments to program
- * @argv: array of arguments to program
+ * main - entry point for program to copy files
+ * @argc: count of arguments passed
+ * @argv: array of char pointers to the arguments
  *
- * Return: EXIT_SUCCESS on success, exit with error number, otherwise.
+ * Return: 1 on success, exits on failure w/ error code
  */
 int main(int argc, char *argv[])
 {
-	char *file_from, *file_to;
-	char buf[READ_NBYTES];
-	ssize_t r;
-	int fdr, fdw, c = 0;
+	char buff[1024];
+	int bytes_read = 0, _EOF = 1, from_fd = -1, to_fd = -1, err = 0;
 
 	if (argc != 3)
 	{
 		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
 		exit(97);
 	}
-	file_from = argv[1];
-	file_to = argv[2];
-	fdr = open(file_from, O_RDONLY);
-	if (fdr == -1)
+	from_fd = open(argv[1], O_RDONLY);
+	if (from_fd < 0) /* file didn't exist */
 	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n",
-			file_from);
+		read_error(argv[1]);
 		exit(98);
 	}
-	fdw = open(file_to, O_CREAT | O_TRUNC | O_WRONLY, 00664);
-	if (fdw == -1)
+	to_fd = open(argv[2], O_WRONLY | O_TRUNC | O_CREAT, 0664);
+	if (to_fd < 0) /* failed to open/create to_file */
 	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file_to);
+		write_error(argv[2]);
+		safe_close(from_fd);
 		exit(99);
 	}
-	while ((r = read(fdr, buf, READ_NBYTES)))
-		write(fdw, buf, r);
-	if (close(fdw))
+	while (_EOF)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fdw);
-		c = 1;
+		_EOF = read(from_fd, buff, 1024);
+		if (_EOF < 0) /* error reading file */
+		{
+			read_error(argv[1]);
+			safe_close(from_fd);
+			safe_close(to_fd);
+			exit(98);
+		}
+		else if (_EOF == 0) /* reached end of file */
+			break;
+		bytes_read += _EOF;
+		err = write(to_fd, buff, _EOF);
+		if (err < 0) /* failed to write */
+		{
+			write_error(argv[2]);
+			safe_close(from_fd);
+			safe_close(to_fd);
+			exit(99);
+		}
 	}
-	if (close(fdr))
+	err = safe_close(to_fd);
+	if (err < 0) /* close file failure */
 	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fdr);
-		c = 1;
-	}
-	if (c)
+		safe_close(from_fd);
 		exit(100);
-	exit(EXIT_SUCCESS);
+	}
+	err = safe_close(from_fd);
+	if (err < 0)
+		exit(100);
+	return (0);
+}
+
+/**
+ * safe_close - closes a file and exits/prints error if close encounters error
+ * @filedescriptor: file descriptor for file to be closed
+ *
+ * Return: 1 on success, -1 on failure (status code received from close())
+ */
+int safe_close(int filedescriptor)
+{
+	int err;
+
+	err = close(filedescriptor);
+	if (err < 0)
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", filedescriptor);
+	return (err);
+}
+
+/**
+ * read_error - prints a read error message to stderr
+ * @filename: filename to print out for errorcode
+ *
+ * Return: always void
+ */
+void read_error(char *filename)
+{
+	dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", filename);
+}
+
+/**
+ * write_error - prints a write error message to stderr
+ * @filename: filename to print out for errorcode
+ *
+ * Return: always void
+ */
+void write_error(char *filename)
+{
+	dprintf(STDERR_FILENO, "Error: Can't write to %s\n", filename);
 }
